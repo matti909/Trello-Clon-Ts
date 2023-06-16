@@ -10,10 +10,12 @@ export class Task {
     trim: true,
   })
   title: string;
+
   @Prop({
     trim: true,
   })
   description: string;
+
   @Prop({
     default: false,
   })

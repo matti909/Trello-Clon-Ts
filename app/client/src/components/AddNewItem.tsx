@@ -9,7 +9,8 @@ type AddNewItemProps = {
 
 export const AddNewItem = (props: AddNewItemProps) => {
   const [showForm, setShowForm] = useState(false);
-  const { onAdd, toggleButtonText } = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { onAdd, toggleButtonText, dark: _dark } = props;
 
   if (showForm) {
     return (

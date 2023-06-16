@@ -5,7 +5,7 @@ import { TasksModule } from './tasks/tasks.module';
 @Module({
   imports: [
     TasksModule,
-    MongooseModule.forRoot('mongodb://mongo:27017/taskdb'),
+    MongooseModule.forRoot('mongodb://localhost:27017/taskdb'),
   ],
   controllers: [],
   providers: [],
