@@ -1,16 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { NewItemForm } from "./NewItemForm";
 
-type AddNewItemProps = {
+interface AddNewItemProps {
   onAdd(text: string): void;
   toggleButtonText: string;
-  dark?: boolean | undefined;
-};
+  dark?: boolean;
+}
 
 export const AddNewItem = (props: AddNewItemProps) => {
   const [showForm, setShowForm] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { onAdd, toggleButtonText, dark: _dark } = props;
+  const [clickedInside, setClickedInside] = useState(false);
+  const { onAdd, toggleButtonText, dark } = props;
+  const addButtonRef = useRef<HTMLButtonElement>(null);
+
+  const handleClickOutside = useCallback(() => {
+    if (!clickedInside) {
+      setShowForm(false);
+    }
+    setClickedInside(false);
+  }, [clickedInside]);
+
+  const handleEscKey = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      setShowForm(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [handleClickOutside, handleEscKey]);
 
   if (showForm) {
     return (
@@ -24,7 +48,14 @@ export const AddNewItem = (props: AddNewItemProps) => {
   }
 
   return (
-    <button {...props} onClick={() => setShowForm(true)}>
+    <button
+      ref={addButtonRef}
+      className={`${
+        dark ? "text-black" : "text-white"
+      } bg-white bg-opacity-25 hover:bg-opacity-50 rounded-md border-none cursor-pointer max-w-md p-2`}
+      onClick={() => setShowForm(true)}
+      onMouseDown={() => setClickedInside(true)}
+    >
       {toggleButtonText}
     </button>
   );
