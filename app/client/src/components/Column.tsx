@@ -3,6 +3,8 @@ import { AddNewItem } from "./AddNewItem";
 
 interface ColumnProps {
   text: string;
+  index: number;
+  id: string;
 }
 
 export const Column = ({
