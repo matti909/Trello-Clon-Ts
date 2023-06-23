@@ -2,6 +2,9 @@ interface Item {
   id: string;
 }
 
-export const findItemIndexById = <T extends Item>(items: T[], id: string) => {
-  return items.findIndex((item: T) => item.id === id);
+export const findItemIndexById = <TItem extends Item>(
+  items: TItem[],
+  id: string
+) => {
+  return items.findIndex((item: TItem) => item.id === id);
 };

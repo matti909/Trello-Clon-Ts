@@ -1,6 +1,7 @@
-export const moveItem = <T>(array: T[], from: number, to: number) => {
-  const startIndex = to < 0 ? array.length + to : to;
-  const item = array.splice(from, 1)[0];
-  array.splice(startIndex, 0, item);
-  return array;
+import { insertItemAtIndex } from "./insertItemAtIndex";
+import { removeItemAtIndex } from "./removeItemAtIndex";
+
+export const moveItem = <TItem>(array: TItem[], from: number, to: number) => {
+  const item = array[from];
+  return insertItemAtIndex(removeItemAtIndex(array, from), item, to);
 };

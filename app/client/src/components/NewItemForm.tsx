@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useFocus } from "../utils/useFocus";
+import { useFocus } from "../hooks/useFocus";
 
 interface NewItemFormProps {
   onAdd(text: string): void;
