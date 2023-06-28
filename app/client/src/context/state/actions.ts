@@ -30,6 +30,8 @@ export type AppState = {
   draggedItem: DragItem | null;
 };
 
+/**ACTIONS CREATOR */
+
 export const addTask = (text: string, listId: string): Action => ({
   type: "ADD_TASK",
   payload: {
