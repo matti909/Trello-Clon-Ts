@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { NewItemForm } from "./NewItemForm";
+import { AddItemButton } from "./Styles";
 
 interface AddNewItemProps {
   onAdd(text: string): void;
@@ -48,15 +49,12 @@ export const AddNewItem = (props: AddNewItemProps) => {
   }
 
   return (
-    <button
+    <AddItemButton
       ref={addButtonRef}
-      className={`${
-        dark ? "text-black" : "text-white"
-      } bg-white bg-opacity-25 hover:bg-opacity-50 rounded-md border-none cursor-pointer max-w-md p-2`}
       onClick={() => setShowForm(true)}
       onMouseDown={() => setClickedInside(true)}
     >
       {toggleButtonText}
-    </button>
+    </AddItemButton>
   );
 };

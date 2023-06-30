@@ -7,6 +7,7 @@ import { throttle } from "throttle-debounce-ts";
 import { useDrop } from "react-dnd";
 import { useItemDrag } from "../hooks/useItemDrag";
 import { isHidden } from "../utils/isHidden";
+import { ColumnContainer, ColumnTitle } from "./Styles";
 
 interface ColumnProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -44,13 +45,15 @@ export const Column = ({ text, id, isPreview, ...rest }: ColumnProps) => {
   }`;
 
   return (
-    <div
+    <ColumnContainer
       {...rest}
       ref={ref}
       hidden={isHidden(draggedItem, "COLUMN", id)}
       className={columnClass}
     >
-      <div className=" @apply font-[bold] pt-1.5 pb-3 px-4">{text}</div>
+      <ColumnTitle className=" @apply font-[bold] pt-1.5 pb-3 px-4">
+        {text}
+      </ColumnTitle>
       {tasks.map((task) => (
         <Card text={task.text} key={task.id} id={task.id} />
       ))}
@@ -59,6 +62,6 @@ export const Column = ({ text, id, isPreview, ...rest }: ColumnProps) => {
         onAdd={(text) => dispatch(addTask(text, id))}
         dark
       />
-    </div>
+    </ColumnContainer>
   );
 };
