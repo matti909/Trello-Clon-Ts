@@ -50,6 +50,7 @@ export const AddNewItem = (props: AddNewItemProps) => {
 
   return (
     <AddItemButton
+      dark={dark}
       ref={addButtonRef}
       onClick={() => setShowForm(true)}
       onMouseDown={() => setClickedInside(true)}

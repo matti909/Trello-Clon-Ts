@@ -1,10 +1,10 @@
 import { DetailedHTMLProps, HTMLAttributes, useRef } from "react";
 import { useAppState } from "../context/AppStateContext";
+import { useDrop } from "react-dnd";
+import { throttle } from "throttle-debounce-ts";
 import { addTask, moveList } from "../context/state/actions";
 import { AddNewItem } from "./AddNewItem";
 import { Card } from "./Card";
-import { throttle } from "throttle-debounce-ts";
-import { useDrop } from "react-dnd";
 import { useItemDrag } from "../hooks/useItemDrag";
 import { isHidden } from "../utils/isHidden";
 import { ColumnContainer, ColumnTitle } from "./Styles";
@@ -16,7 +16,7 @@ interface ColumnProps
   isPreview?: boolean;
 }
 
-export const Column = ({ text, id, isPreview, ...rest }: ColumnProps) => {
+export const Column = ({ text, id }: ColumnProps) => {
   const { draggedItem, getTasksByListId, dispatch } = useAppState();
 
   const tasks = getTasksByListId(id);
@@ -40,20 +40,9 @@ export const Column = ({ text, id, isPreview, ...rest }: ColumnProps) => {
 
   drag(drop(ref));
 
-  const columnClass = `bg-[#ebecf0] w-[300px] min-h-[40px] rounded-[3px] p-[8px] flex-grow-0 ${
-    isPreview ? "is-preview" : ""
-  }`;
-
   return (
-    <ColumnContainer
-      {...rest}
-      ref={ref}
-      hidden={isHidden(draggedItem, "COLUMN", id)}
-      className={columnClass}
-    >
-      <ColumnTitle className=" @apply font-[bold] pt-1.5 pb-3 px-4">
-        {text}
-      </ColumnTitle>
+    <ColumnContainer ref={ref} hidden={isHidden(draggedItem, "COLUMN", id)}>
+      <ColumnTitle>{text}</ColumnTitle>
       {tasks.map((task) => (
         <Card text={task.text} key={task.id} id={task.id} />
       ))}

@@ -4,7 +4,7 @@ export const AppContainer = styled.div`
   align-items: flex-start;
   background-color: #3179ba;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   height: 100%;
   padding: 20px;
   width: 100%;
@@ -80,7 +80,7 @@ export const NewItemInput = styled.input`
   box-shadow: #091e4240 0px 1px 0px 0px;
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
-  width: 100%;
+  width: 88.8%;
 `;
 
 export const NewItemButton = styled.button`
