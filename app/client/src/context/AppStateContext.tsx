@@ -1,6 +1,6 @@
 import { Dispatch, createContext, useContext } from "react";
-import { Action, AppState } from "./state/actions";
-import { List, Task, appStateReducer } from "./AppStateReducer";
+import { Action } from "./state/actions";
+import { AppState, List, Task, appStateReducer } from "./AppStateReducer";
 import { useImmerReducer } from "use-immer";
 import { DragItem } from "../interfaces/DragItem";
 

@@ -1,7 +1,14 @@
+import { DragItem } from "../interfaces/DragItem";
 import { findItemIndexById } from "../utils/findItemIndexById";
 import { moveItem } from "../utils/moveItem";
-import { Action, AppState } from "./state/actions";
+
 import { v4 as uuidv4 } from "uuid";
+import { Action } from "./state/actions";
+
+export type AppState = {
+  lists: List[];
+  draggedItem: DragItem | null;
+};
 
 export interface Task {
   id: string;
@@ -14,7 +21,7 @@ export interface List {
   tasks: Task[];
 }
 
-export interface AppStateContextProps {
+export interface AppdraftContextProps {
   lists: List[];
   getTasksByListId(id: string): Task[];
 }
@@ -54,6 +61,33 @@ export const appStateReducer = (
 
     case "SET_DRAGGED_ITEM": {
       draft.draggedItem = action.payload;
+      break;
+    }
+
+    case "MOVE_TASK": {
+      const { draggedItemId, hoveredItemId, sourceColumnId, targetColumnId } =
+        action.payload;
+      const sourceListIndex = findItemIndexById(draft.lists, sourceColumnId);
+      const targetListIndex = findItemIndexById(draft.lists, targetColumnId);
+      const dragIndex = findItemIndexById(
+        draft.lists[sourceListIndex].tasks,
+        draggedItemId
+      );
+      const hoverIndex = hoveredItemId
+        ? findItemIndexById(draft.lists[targetListIndex].tasks, hoveredItemId)
+        : 0;
+
+      if (sourceListIndex === -1 || targetListIndex === -1) {
+        return; // Si no se encuentra el índice de alguna de las listas, salimos de la función
+      }
+
+      const item = draft.lists[sourceListIndex].tasks[dragIndex];
+
+      // Eliminar la tarea de la lista de origen
+      draft.lists[sourceListIndex].tasks.splice(dragIndex, 1);
+
+      // Agregar la tarea a la lista de destino
+      draft.lists[targetListIndex].tasks.splice(hoverIndex, 0, item);
       break;
     }
   }
